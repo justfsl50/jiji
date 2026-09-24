@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- PLACEHOLDER: find-replace [WHATSAPP_LINK] with your wa.me link -->
+<title>Jiji - your college sidekick on WhatsApp</title>
+<meta name="description" content="Jiji is a black cat on WhatsApp who knows your attendance, timetable, spending and deadlines. Text it like a friend. No app. No account.">
+<meta property="og:title" content="Jiji - your college sidekick on WhatsApp">
+<meta property="og:description" content="Attendance, timetable, expenses and reminders. Just text Jiji.">
+<meta property="og:image" content="assets/jiji-icon.png">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/jiji-icon.png">
+<style>
+  :root{
+    --bg:#fdfbf5; --ink:#161616; --muted:#5f6166; --teal:#17a2a4; --teal-dk:#0f7f81;
+    --mustard:#f2b41c; --mustard-lt:#fff4d6; --amber:#f5a623; --line:#ece6d8; --card:#fff;
+    --wa-bg:#ece5dd; --bubble-out:#d9fdd3; --green:#1faa59; --green-dk:#128c4a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  img{display:block;max-width:100%}
+  .cat{mix-blend-mode:multiply;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 58%,transparent 71%);mask-image:radial-gradient(circle at 50% 50%,#000 58%,transparent 71%)}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(253,251,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:850;font-size:20px;text-decoration:none;color:var(--ink)}
+  .logo img{width:36px;height:36px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#fff;text-decoration:none;font-weight:750;border-radius:999px;padding:15px 26px;font-size:16px;box-shadow:0 6px 18px rgba(31,170,89,.28);transition:transform .15s,background .15s}
+  .btn:hover{background:var(--green-dk);transform:translateY(-1px)}
+  .btn.sm{padding:9px 16px;font-size:14px;box-shadow:none}
+
+  /* hero */
+  .hero{padding:34px 0 30px;position:relative}
+  .hero .grid{display:grid;gap:30px;align-items:center}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px;color:var(--muted);margin-bottom:16px}
+  .pill b{color:var(--ink)}
+  h1{font-size:clamp(34px,9vw,60px);line-height:1.05;letter-spacing:-.025em;font-weight:900}
+  h1 .rot{display:block;color:var(--teal);min-height:2.1em}
+  .lead{font-size:18px;color:var(--muted);margin:16px 0 22px;max-width:520px}
+  .lead b{color:var(--ink)}
+  .noes{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .noes span{font-size:13px;font-weight:650;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+
+  .stage{position:relative;max-width:360px;margin:0 auto}
+  .stage .peek{position:absolute;width:92px;right:-12px;top:-30px;z-index:3;filter:drop-shadow(0 8px 12px rgba(0,0,0,.12))}
+  .stage .peek img{mix-blend-mode:normal;border-radius:50%;background:transparent}
+  .phone{background:#111;border-radius:40px;padding:10px;box-shadow:0 30px 60px -20px rgba(0,0,0,.35);position:relative;z-index:2}
+  .screen{border-radius:32px;overflow:hidden;background:var(--wa-bg)}
+  .wa-top{background:#075e54;color:#fff;display:flex;align-items:center;gap:10px;padding:13px 16px}
+  .wa-top img{width:36px;height:36px}
+  .wa-top b{display:block;font-size:15px}
+  .wa-top small{opacity:.85;font-size:12px}
+  .chat{height:370px;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;justify-content:flex-end}
+  .b{max-width:84%;padding:8px 11px;border-radius:12px;font-size:14px;line-height:1.4;box-shadow:0 1px 1px rgba(0,0,0,.08);animation:pop .3s ease both}
+  .b.out{align-self:flex-end;background:var(--bubble-out);border-top-right-radius:3px}
+  .b.in{align-self:flex-start;background:#fff;border-top-left-radius:3px}
+  .b small{display:block;text-align:right;font-size:10px;color:#8a8f94;margin-top:2px}
+  .typing{align-self:flex-start;background:#fff;border-radius:12px;padding:10px 14px;display:flex;gap:4px}
+  .typing i{width:6px;height:6px;border-radius:50%;background:#9aa0a6;animation:blink 1s infinite}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes pop{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
+  @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:34px}
+  .chips button{font:inherit;font-size:13px;font-weight:650;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;cursor:pointer}
+  .chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .hint{text-align:center;font-size:13px;color:var(--muted);margin-top:10px}
+
+  section{padding:56px 0}
+  h2{font-size:clamp(27px,7vw,42px);line-height:1.12;letter-spacing:-.02em;font-weight:850;margin-bottom:12px}
+  .sub{color:var(--muted);font-size:17px;max-width:620px;margin-bottom:28px}
+  .hl{background:linear-gradient(transparent 60%,var(--mustard) 60%);padding:0 2px}
+
+  /* meet jiji */
+  .meet{background:var(--mustard-lt);border-radius:32px;padding:30px 22px;display:grid;gap:18px;align-items:center}
+  .meet .pic{max-width:320px;margin:0 auto;width:100%}
+  .meet p.blurb{font-size:18px;line-height:1.6}
+  .meet .traits{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .meet .traits span{background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
+
+  /* personas */
+  .personas{display:grid;gap:12px}
+  .persona{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+  .persona .em{font-size:28px;line-height:1}
+  .persona b{display:block;font-size:16px;margin-bottom:2px}
+  .persona p{font-size:14px;color:var(--muted)}
+
+  /* marquee */
+  .say{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:8px 0}
+  .track{display:flex;gap:10px;width:max-content;animation:scroll 42s linear infinite;padding:5px 0}
+  .track.rev{animation-direction:reverse;animation-duration:48s}
+  .track span{background:var(--bubble-out);border-radius:12px;padding:9px 14px;font-size:14px;white-space:nowrap}
+  .track.rev span{background:#f1efe9}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* steps */
+  .steps{display:grid;gap:14px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}
+  .step .n{width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:12px}
+  .step h3{font-size:19px;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:15px;margin-bottom:14px}
+  .step .b{display:inline-block;max-width:100%;animation:none}
+
+  /* features */
+  .feat{display:grid;gap:22px;align-items:center;padding:30px 0;border-top:1px solid var(--line)}
+  .feat:first-of-type{border-top:0}
+  .feat h3{font-size:clamp(22px,5.5vw,30px);line-height:1.2;letter-spacing:-.01em;margin-bottom:10px}
+  .feat p{color:var(--muted);font-size:16px;margin-bottom:14px}
+  .feat .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:4px 10px;margin-bottom:10px;background:#dff4f4;color:var(--teal-dk)}
+  .just{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px}
+  .ex{display:flex;flex-wrap:wrap;gap:6px}
+  .ex code{font-family:inherit;font-size:13px;background:var(--bubble-out);border-radius:8px;padding:5px 10px}
+  .mini{background:var(--wa-bg);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:8px;max-width:380px;width:100%;margin:0 auto}
+  .mini .b{animation:none}
+  .roadmap{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+  .roadmap span{border:1.5px dashed #c9c1b3;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:650;color:var(--muted)}
+
+  /* why */
+  .why{background:var(--ink);color:#fff;border-radius:32px;padding:34px 22px;position:relative;overflow:hidden}
+  .why h2{color:#fff}
+  .why .sub{color:#b8bcc1}
+  .vs{display:grid;gap:12px}
+  .vs div{background:rgba(255,255,255,.07);border-radius:16px;padding:16px}
+  .vs div.us{background:var(--teal)}
+  .vs b{display:block;margin-bottom:4px}
+  .vs p{color:#c9cdd1;font-size:14px}
+  .vs div.us p{color:#e6fbfb}
+
+  /* faq */
+  details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:10px}
+  summary{font-weight:750;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  summary::after{content:"+";font-weight:800;color:var(--teal)}
+  details[open] summary::after{content:"-"}
+  details p{color:var(--muted);margin-top:8px;font-size:15px}
+
+  /* cta */
+  .cta{text-align:center}
+  .cta img{width:220px;margin:0 auto 6px}
+  .cta h2{max-width:640px;margin:0 auto 12px}
+  .cta .sub{margin:0 auto 24px}
+  footer{border-top:1px solid var(--line);padding:24px 16px 40px;color:var(--muted);font-size:13px;text-align:center}
+  footer img{width:28px;height:28px;display:inline-block;vertical-align:middle;margin-right:6px}
+
+  @media(min-width:780px){
+    .hero{padding:64px 0 50px}
+    .hero .grid{grid-template-columns:1.1fr .9fr}
+    .personas{grid-template-columns:repeat(3,1fr)}
+    .steps{grid-template-columns:repeat(3,1fr)}
+    .vs{grid-template-columns:repeat(3,1fr)}
+    .meet{grid-template-columns:.8fr 1.2fr;padding:44px}
+    .feat{grid-template-columns:1fr 1fr;gap:40px}
+    .feat.flip .txt{order:2}
+    .why{padding:56px 48px}
+  }
+  @media (prefers-reduced-motion:reduce){.track,.b{animation:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#"><img src="assets/jiji-icon.png" alt="Jiji">Jiji</a>
+    <a class="btn sm" href="[WHATSAPP_LINK]">Say hi 👋</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <span class="pill">🐈‍⬛ <b>Jiji</b> · your college sidekick on WhatsApp</span>
+      <h1>
+        Never open the ERP portal again.
+        <span class="rot" id="rot">Never guess your attendance.</span>
+      </h1>
+      <p class="lead"><b>Jiji</b> is a black cat who lives in your WhatsApp and knows your college life. Attendance, timetable, notices, where your money went, what's due tomorrow. Just text it like a friend.</p>
+      <a class="btn" href="[WHATSAPP_LINK]">💬 Text Jiji on WhatsApp</a>
+      <div class="noes"><span>🚫 No app</span><span>🚫 No account</span><span>🚫 No new UI</span><span>🗣️ Hinglish works</span></div>
+    </div>
+
+    <div>
+      <div class="stage">
+        <div class="phone">
+          <div class="screen">
+            <div class="wa-top"><img src="assets/jiji-icon.png" alt=""><div><b>Jiji 🐈‍⬛</b><small id="status">online</small></div></div>
+            <div class="chat" id="chat"></div>
+          </div>
+        </div>
+        <div class="peek"><img src="assets/jiji-icon.png" alt="Jiji the cat"></div>
+      </div>
+      <div class="chips" id="chips">
+        <button data-k="att" class="on">📊 attendance</button>
+        <button data-k="tt">🗓️ timetable</button>
+        <button data-k="exp">💸 expenses</button>
+        <button data-k="rem">⏰ reminder</button>
+        <button data-k="todo">📝 todo</button>
+      </div>
+      <p class="hint">👆 Tap one, watch Jiji reply</p>
+    </div>
+  </div>
+</header>
+
+<div class="say" aria-label="Example messages">
+  <div class="track">
+    <span>attendance kitni hai? 📊</span><span>kal time table? 🗓️</span><span>200 momos pe kharcha 🥟</span><span>remind me kal 9am lab ⏰</span><span>kitne classes bunk kar sakta hu? 🤔</span><span>is mahine kitna udaya? 💸</span><span>result aaya kya? 🎯</span><span>todo DBMS assignment by friday 📝</span>
+    <span>attendance kitni hai? 📊</span><span>kal time table? 🗓️</span><span>200 momos pe kharcha 🥟</span><span>remind me kal 9am lab ⏰</span><span>kitne classes bunk kar sakta hu? 🤔</span><span>is mahine kitna udaya? 💸</span><span>result aaya kya? 🎯</span><span>todo DBMS assignment by friday 📝</span>
+  </div>
+  <div class="track rev">
+    <span>any new notice? 📢</span><span>150 auto fare 🛺</span><span>remind me fee due on 5th 🏦</span><span>sabse kam attendance kisme hai? 📉</span><span>aaj kaunsi class hai? 🏫</span><span>food pe kitna gaya this week? 🍔</span><span>remind me 11pm revise OS 📚</span><span>meri todo list 📋</span>
+    <span>any new notice? 📢</span><span>150 auto fare 🛺</span><span>remind me fee due on 5th 🏦</span><span>sabse kam attendance kisme hai? 📉</span><span>aaj kaunsi class hai? 🏫</span><span>food pe kitna gaya this week? 🍔</span><span>remind me 11pm revise OS 📚</span><span>meri todo list 📋</span>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="meet">
+      <img class="pic cat" src="assets/jiji-neutral.webp" alt="Jiji, a black cat with a teal scarf and a mustard satchel">
+      <div>
+        <h2>Meet Jiji. <span class="hl">Annoying because it cares.</span></h2>
+        <p class="blurb">Jiji is the sidekick who has your back and also has your attendance percentage memorized. Sassy, a little dramatic and fiercely loyal, Jiji rides through your whole college day with a tiny yellow satchel full of timetables, notices and reminders you were definitely going to forget. Jiji will nag you about the 9 AM lab, side-eye your 68% attendance, and ring the bell until you reply. Then the moment you hit 75%, Jiji is the first one throwing confetti.</p>
+        <div class="traits"><span>😼 sassy</span><span>🎭 a little dramatic</span><span>🫶 fiercely loyal</span><span>🔔 rings till you reply</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <h2>Jiji is for you if you...</h2>
+    <p class="sub">If any of these is you, Jiji already likes you. And is already worried about you.</p>
+    <div class="personas">
+      <div class="persona"><div class="em">😰</div><div><b>fear the 75% rule</b><p>...but only opens the ERP when exam forms are due. Too late, bestie.</p></div></div>
+      <div class="persona"><div class="em">🚪</div><div><b>walk into empty rooms</b><p>...because the timetable changed and nobody told you.</p></div></div>
+      <div class="persona"><div class="em">🫠</div><div><b>are broke by the 20th</b><p>...with zero idea where the money went. Momos, probably.</p></div></div>
+      <div class="persona"><div class="em">📝</div><div><b>remember deadlines after they pass</b><p>...assignment, fee, form. Every single time.</p></div></div>
+      <div class="persona"><div class="em">😴</div><div><b>treat the 9am alarm as a suggestion</b><p>...Jiji does not. Jiji rings the bell.</p></div></div>
+      <div class="persona"><div class="em">📱</div><div><b>live on WhatsApp</b><p>...and has no space left for one more college app.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <h2>Text. Get answers. Chill.</h2>
+    <p class="sub">There is no tutorial. You already know how to send a WhatsApp message.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Text it like a friend</h3><p>English, Hindi, Hinglish, typos. No commands, no menus, no "correct format".</p><span class="b out">attendance kitni hai?</span></div>
+      <div class="step"><div class="n">2</div><h3>Jiji answers in seconds</h3><p>Your real data from the college ERP, plus everything you've told Jiji, right in the chat.</p><span class="b in">📊 78% overall. DBMS is at 71% 😾 attend the next 3.</span></div>
+      <div class="step"><div class="n">3</div><h3>Forget about it</h3><p>Jiji remembers. Reminders and deadlines come back to you exactly when they matter.</p><span class="b in">🔔 8:45 AM - DBMS in 15 min, Room 204. Uth ja.</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px" id="features">
+  <div class="wrap">
+    <h2>Everything in the satchel.</h2>
+    <p class="sub">College stuff, money stuff, don't-forget stuff. One contact, one chat.</p>
+
+    <div class="feat">
+      <div class="txt">
+        <span class="tag">College ERP</span>
+        <h3>Your attendance, before the teacher brings it up.</h3>
+        <p>Jiji reads your college ERP so you don't have to. Attendance by subject, how many classes you can safely skip, tomorrow's timetable, new notices, results and fee dues.</p>
+        <div class="just">Try texting:</div>
+        <div class="ex"><code>attendance kitni hai?</code><code>kitne bunk kar sakta hu?</code><code>kal time table?</code><code>any new notice?</code></div>
+      </div>
+      <div class="mini">
+        <span class="b out">kitne bunk kar sakta hu? 😅</span>
+        <span class="b in">Overall: 4 classes safe.<br>DBMS: zero. Don't even think about it 😾</span>
+      </div>
+    </div>
+
+    <div class="feat flip">
+      <div class="txt">
+        <span class="tag">Expense tracker</span>
+        <h3>Know where the money went. Before month-end panic.</h3>
+        <p>Log spending in one line, the way you'd tell a friend. Ask Jiji for today, this week or this month, by category. No spreadsheets, no budgeting app you'll abandon in 3 days.</p>
+        <div class="just">Try texting:</div>
+        <div class="ex"><code>200 momos pe kharcha</code><code>150 auto</code><code>is mahine kitna udaya?</code><code>food pe kitna gaya?</code></div>
+      </div>
+      <div class="mini">
+        <span class="b out">is mahine kitna udaya?</span>
+        <span class="b in">💸 September: <b>₹4,860</b><br>Food ₹2,310 · Travel ₹940 · Other ₹1,610<br>Food is 47%. Momos ka kuch karo 🥟</span>
+      </div>
+    </div>
+
+    <div class="feat">
+      <div class="txt">
+        <span class="tag">Reminders &amp; todos</span>
+        <h3>Say it once. Jiji nags until it's done.</h3>
+        <p>Classes, assignments, fee dates, "call mummy". Set a reminder in plain words, keep a todo list, and Jiji rings the bell at exactly the right moment. Mistyped the time? Just say "actually 10am".</p>
+        <div class="just">Try texting:</div>
+        <div class="ex"><code>remind me kal 9am lab</code><code>todo DBMS assignment by friday</code><code>remind me fee due on 5th</code><code>meri todo list</code></div>
+      </div>
+      <div class="mini">
+        <img class="cat" src="assets/jiji-nagging.webp" alt="Jiji pointing at a phone, nagging" style="width:170px;margin:0 auto">
+        <span class="b in">🔔 DBMS assignment is due tomorrow. You said you'd do it "tonight". It is 11pm. 👀</span>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin:26px 0 4px">Coming to the satchel next</h3>
+    <div class="roadmap"><span>☀️ Morning briefing</span><span>📧 Gmail</span><span>📅 Exam form &amp; scholarship deadlines</span><span>💼 Placements</span><span>🏫 More colleges</span></div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="why">
+      <h2>You were never going to open another app.</h2>
+      <p class="sub">Be honest: the ERP tab stays closed and the new app gets uninstalled in a week. WhatsApp is open anyway, so that's where Jiji lives.</p>
+      <div class="vs">
+        <div><b>🐢 The ERP portal</b><p>Slow, clunky, login every time. Has your data, zero brain.</p></div>
+        <div><b>🤖 Generic chatbots</b><p>Smart, but know nothing about your college, your classes or your money.</p></div>
+        <div class="us"><b>🐈‍⬛ Jiji</b><p>Your real college data + your life, in the chat you never close.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <h2>Quick questions</h2>
+    <details><summary>Do I need to install anything?</summary><p>No. Jiji is a WhatsApp contact. Save it, say hi, ask your first question.</p></details>
+    <details><summary>Which colleges does it work with?</summary><p>Jiji starts with Axis Colleges, Kanpur. More colleges are next. The expense tracker and reminders work for anyone.</p></details>
+    <details><summary>Do I have to type in English?</summary><p>Nope. English, Hindi, Hinglish, half-sentences, typos. If your friend would get it, Jiji gets it.</p></details>
+    <details><summary>Will it actually nag me?</summary><p>Yes. That's the whole point. Politely at first.</p></details>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <img class="cat" src="assets/jiji-celebrating.webp" alt="Jiji celebrating with confetti">
+    <h2>Hit 75%. Get confetti.</h2>
+    <p class="sub">Save Jiji, send "hi", and ask your first question. It takes 10 seconds.</p>
+    <a class="btn" href="[WHATSAPP_LINK]">💬 Text Jiji on WhatsApp</a>
+  </div>
+</section>
+
+<footer><img src="assets/jiji-icon.png" alt="">Jiji · made in Kanpur, for every student who forgets things</footer>
+
+<script>
+const rot=["Never guess your attendance.","Never miss the 9am lab.","Never go broke by the 20th.","Never forget a deadline."];
+let ri=0;setInterval(()=>{ri=(ri+1)%rot.length;document.getElementById('rot').textContent=rot[ri]},2600);
+const convos={
+  att:[["out","attendance kitni hai?"],["in","📊 Overall: <b>78%</b><br>DBMS: 71% 😾<br>OS: 82% · CN: 80%<br><br>Attend the next 3 DBMS classes to cross 75%."],["out","kitne bunk kar sakta hu? 😅"],["in","Overall: 4 safe. DBMS: zero. I'm watching 👀"]],
+  tt:[["out","kal time table?"],["in","🗓️ Tomorrow (Fri)<br>9:00 DBMS - Room 204<br>11:00 OS Lab - Lab 3<br>2:00 CN - Room 110"],["out","remind me 8:45"],["in","✅ Done. Bell rings at 8:45 AM 🔔"]],
+  exp:[["out","200 momos pe kharcha"],["in","✅ Logged ₹200 · Food 🥟"],["out","is mahine kitna udaya?"],["in","💸 September: <b>₹4,860</b><br>Food ₹2,310 · Travel ₹940 · Other ₹1,610<br><br>Food is 47%. Momos ka kuch karo."]],
+  rem:[["out","remind me kal 9am lab"],["in","✅ Got it. Fri, 8:50 AM. I'll ring till you reply 🔔"],["out","actually 8:30"],["in","Fixed. 8:30 AM it is 😼"]],
+  todo:[["out","todo DBMS assignment by friday"],["in","📝 Added. I'll nudge you Thursday evening."],["out","meri todo list"],["in","📋 Your list:<br>1. DBMS assignment - Fri<br>2. Pay hostel fee - 5th<br>3. Call mummy - today 🫶"]]
+};
+const chat=document.getElementById('chat'),status=document.getElementById('status');let run=0;
+function now(){const d=new Date();return d.getHours()+":"+String(d.getMinutes()).padStart(2,'0')}
+async function play(k){const my=++run;chat.innerHTML="";
+  for(const [side,txt] of convos[k]){if(my!==run)return;
+    if(side==="in"){status.textContent="typing...";const t=document.createElement('div');t.className="typing";t.innerHTML="<i></i><i></i><i></i>";chat.appendChild(t);
+      await new Promise(r=>setTimeout(r,900));if(my!==run)return;t.remove();status.textContent="online";}
+    else await new Promise(r=>setTimeout(r,450));
+    if(my!==run)return;const b=document.createElement('div');b.className="b "+side;b.innerHTML=txt+"<small>"+now()+(side==="out"?" ✓✓":"")+"</small>";chat.appendChild(b);}}
+document.querySelectorAll('#chips button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('#chips button').forEach(x=>x.classList.remove('on'));btn.classList.add('on');play(btn.dataset.k);});
+play('att');
+</script>
+</body>
+</html>
