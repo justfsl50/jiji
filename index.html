@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- PLACEHOLDER: find-replace https://wa.me/917559964699 with your wa.me link -->
-<title>Jiji - reminders, todos and expenses on WhatsApp</title>
+<title>Jiji - your personal agent on WhatsApp</title>
 <meta name="description" content="Say it once on WhatsApp. Jiji remembers your reminders, todos, spending and deadlines, and nags you till it's done. No app. No account.">
-<meta property="og:title" content="Jiji - reminders, todos and expenses on WhatsApp">
-<meta property="og:description" content="Attendance, timetable, expenses and reminders. Just text Jiji.">
+<meta property="og:title" content="Jiji - your personal agent on WhatsApp">
+<meta property="og:description" content="Reminders, todos, expenses and deadlines. Just text Jiji on WhatsApp.">
 <meta property="og:image" content="assets/jiji-icon.png">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/jiji-icon.png">
@@ -26,6 +26,19 @@
 
   nav{position:sticky;top:0;z-index:20;background:rgba(253,251,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  nav .links{display:flex;align-items:center;gap:26px}
+  nav .links a:not(.btn){color:var(--muted);text-decoration:none;font-weight:650;font-size:15px}
+  nav .links a:not(.btn):hover{color:var(--ink)}
+  .navr{display:flex;align-items:center;gap:10px}
+  .burger{display:none;width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:12px;cursor:pointer;align-items:center;justify-content:center;font-size:18px;color:var(--ink)}
+  section,header{scroll-margin-top:70px}
+  @media (max-width:760px){
+    .burger{display:inline-flex}
+    nav .links{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:rgba(253,251,245,.98);border-bottom:1px solid var(--line);padding:6px 20px 14px}
+    nav.open .links{display:flex}
+    nav .links a:not(.btn){padding:13px 2px;border-bottom:1px solid var(--line);font-size:16px}
+    nav .links a:not(.btn):last-child{border-bottom:0}
+  }
   .logo{display:flex;align-items:center;gap:10px;font-weight:850;font-size:20px;text-decoration:none;color:var(--ink)}
   .logo img{width:36px;height:36px}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#fff;text-decoration:none;font-weight:750;border-radius:999px;padding:15px 26px;font-size:16px;box-shadow:0 6px 18px rgba(31,170,89,.28);transition:transform .15s,background .15s}
@@ -174,14 +187,29 @@
 <nav>
   <div class="wrap">
     <a class="logo" href="#"><img src="assets/jiji-icon.png" alt="Jiji">Jiji</a>
-    <a class="btn sm" href="https://wa.me/917559964699">Say hi 👋</a>
+    <div class="links" id="navlinks">
+      <a href="#meet">Meet Jiji</a>
+      <a href="#features">Features</a>
+      <a href="#who">Who it's for</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="navr">
+      <a class="btn sm" href="https://wa.me/917559964699">Say hi 👋</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">☰</button>
+    </div>
   </div>
 </nav>
+<script>
+(function(){var n=document.querySelector('nav'),b=document.getElementById('burger');
+b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);b.textContent=o?'✕':'☰';});
+document.querySelectorAll('#navlinks a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('open');b.setAttribute('aria-expanded','false');b.textContent='☰';});});})();
+</script>
 
 <header class="hero">
   <div class="wrap grid">
     <div>
-      <span class="pill">🔔 <b>Jiji</b> · remembers so you don't have to</span>
+      <span class="pill">🔔 <b>Jiji</b> · your personal agent on WhatsApp</span>
       <h1>
         Stop trying to remember everything.
         <span class="rot" id="rot">Jiji remembers the deadline.</span>
@@ -224,7 +252,7 @@
   </div>
 </div>
 
-<section>
+<section id="meet">
   <div class="wrap">
     <div class="meet">
       <img class="pic cat" src="assets/jiji-neutral.webp" alt="Jiji with a teal scarf and a mustard satchel">
@@ -252,7 +280,7 @@
   </div>
 </section>
 
-<section style="padding-top:8px">
+<section style="padding-top:8px" id="who">
   <div class="wrap">
     <h2>Made for students. Handy for anyone who forgets.</h2>
     <p class="sub">Jiji started in a hostel. Turns out everyone has a 9am lab of their own.</p>
@@ -264,7 +292,7 @@
   </div>
 </section>
 
-<section style="padding-top:8px">
+<section style="padding-top:8px" id="how">
   <div class="wrap">
     <h2>Text. Get answers. Chill.</h2>
     <p class="sub">There is no tutorial. You already know how to send a WhatsApp message.</p>
@@ -349,7 +377,7 @@
   </div>
 </section>
 
-<section style="padding-top:8px">
+<section style="padding-top:8px" id="faq">
   <div class="wrap">
     <h2>Quick questions</h2>
     <details><summary>Do I need to install anything?</summary><p>No. Jiji is a WhatsApp contact. Save it, say hi, ask your first question.</p></details>
@@ -392,4 +420,4 @@ document.querySelectorAll('#chips button').forEach(btn=>btn.onclick=()=>{documen
 play('rem');
 </script>
 </body>
-      </html>
+</html>
