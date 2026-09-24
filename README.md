@@ -1,6 +1,6 @@
 # Jiji
 
-Landing page for Jiji, a WhatsApp sidekick for college students: attendance, timetable and notices from the college ERP, plus expense tracking and reminders/todos.
+Landing page for Jiji: attendance, timetable and notices from the college ERP, plus expense tracking and reminders/todos, all on WhatsApp.
 
 - `index.html` - the whole page (inline CSS/JS, no build step)
 - `assets/` - Jiji mascot images, icon and favicon
