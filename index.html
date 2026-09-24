@@ -154,6 +154,18 @@
     .feat.flip .txt{order:2}
     .why{padding:56px 48px}
   }
+
+  /* grids */
+  .ggrid{display:grid;gap:26px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px 20px}
+  .gcol h4{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a8577;margin-bottom:14px}
+  .gi{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+  .gi:last-child{margin-bottom:0}
+  .gi .ic{flex:0 0 42px;height:42px;border-radius:50%;background:#e3f5f5;display:grid;place-items:center;font-size:19px}
+  .gcol.hero-col .gi .ic{background:var(--mustard-lt)}
+  .gi b{display:block;font-size:16px;line-height:1.3}
+  .gi span{font-size:14px;color:var(--muted)}
+  .gcol.hero-col .gi:first-of-type b{color:var(--teal-dk)}
+  @media(min-width:780px){.ggrid{padding:32px}.ggrid.two{grid-template-columns:1fr 1fr}.ggrid.three{grid-template-columns:1fr 1fr 1fr}}
   @media (prefers-reduced-motion:reduce){.track,.b{animation:none}}
 </style>
 </head>
@@ -242,6 +254,18 @@
 
 <section style="padding-top:8px">
   <div class="wrap">
+    <h2>Made for students. Handy for anyone who forgets.</h2>
+    <p class="sub">Jiji started in a hostel. Turns out everyone has a 9am lab of their own.</p>
+    <div class="ggrid three">
+      <div class="gcol hero-col"><h4>For your life</h4><div class="gi"><div class="ic">🎓</div><div><b>Students</b><span>Assignments, exams, fees and the 9am lab</span></div></div><div class="gi"><div class="ic">🧠</div><div><b>ADHD brains</b><span>A second brain that actually texts back</span></div></div><div class="gi"><div class="ic">👪</div><div><b>Busy parents</b><span>School runs, meds, fees and PTMs</span></div></div></div>
+      <div class="gcol"><h4>For your work</h4><div class="gi"><div class="ic">🧾</div><div><b>CAs &amp; tax consultants</b><span>ITR rush, GST dates, clients who ghost</span></div></div><div class="gi"><div class="ic">💻</div><div><b>Freelancers &amp; consultants</b><span>Chase invoices without the awkward</span></div></div><div class="gi"><div class="ic">🏠</div><div><b>Real estate agents</b><span>Callbacks and site visits, on time</span></div></div><div class="gi"><div class="ic">🩺</div><div><b>Doctors &amp; clinics</b><span>Patient follow-ups and reports, never missed</span></div></div><div class="gi"><div class="ic">🩹</div><div><b>Nurses &amp; shift workers</b><span>Voice note it mid-shift, Jiji handles it</span></div></div><div class="gi"><div class="ic">⚖️</div><div><b>Lawyers &amp; advocates</b><span>Hearing dates and filings, flagged early</span></div></div><div class="gi"><div class="ic">🛡️</div><div><b>Insurance advisors</b><span>Renewals chased before they lapse</span></div></div></div>
+      <div class="gcol"><h4>For your business</h4><div class="gi"><div class="ic">🛒</div><div><b>E-commerce &amp; small shops</b><span>Restock alerts and supplier dues</span></div></div><div class="gi"><div class="ic">📚</div><div><b>Education &amp; coaching</b><span>Fee reminders and parent updates</span></div></div><div class="gi"><div class="ic">💪</div><div><b>Fitness &amp; wellness</b><span>Membership renewals and client check-ins</span></div></div><div class="gi"><div class="ic">🤝</div><div><b>Recruitment &amp; staffing</b><span>Candidate follow-ups and interview slots</span></div></div><div class="gi"><div class="ic">💐</div><div><b>Events &amp; weddings</b><span>Vendors, advances and timelines</span></div></div><div class="gi"><div class="ic">🔑</div><div><b>Landlords &amp; property</b><span>Rent day, renewals and repairs</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
     <h2>Text. Get answers. Chill.</h2>
     <p class="sub">There is no tutorial. You already know how to send a WhatsApp message.</p>
     <div class="steps">
@@ -299,8 +323,15 @@
       </div>
     </div>
 
+
+    <h3 style="font-size:clamp(22px,5.5vw,30px);margin:30px 0 6px;letter-spacing:-.01em">And the rest of the satchel.</h3>
+    <p class="sub" style="margin-bottom:18px">Everything else Jiji does, all from the same chat.</p>
+    <div class="ggrid two">
+      <div class="gcol"><h4>Remember it</h4><div class="gi"><div class="ic">⏰</div><div><b>WhatsApp reminders</b><span>Say it in plain words, get pinged right on time</span></div></div><div class="gi"><div class="ic">📨</div><div><b>Scheduled messages</b><span>Type the birthday wish now, it goes out at midnight</span></div></div><div class="gi"><div class="ic">✅</div><div><b>To-do list</b><span>Add, tick, list. All by text</span></div></div><div class="gi"><div class="ic">🧠</div><div><b>Notes &amp; memory</b><span>Save it once, ask "Rahul ka number?" later</span></div></div><div class="gi"><div class="ic">👥</div><div><b>Group reminders</b><span>Nag your project group so you don't have to</span></div></div><div class="gi"><div class="ic">📅</div><div><b>Calendar nudges</b><span>A WhatsApp ping before every meeting or class</span></div></div></div>
+      <div class="gcol"><h4>Get it done</h4><div class="gi"><div class="ic">🧭</div><div><b>Daily check-ins</b><span>Morning: the plan. Evening: "so... did you?"</span></div></div><div class="gi"><div class="ic">🔥</div><div><b>Habit streaks</b><span>Reply "done" and don't break the chain</span></div></div><div class="gi"><div class="ic">🎯</div><div><b>Goals</b><span>A deadline with a countdown, so nothing sneaks up</span></div></div><div class="gi"><div class="ic">☀️</div><div><b>Briefings &amp; reviews</b><span>Your whole day, or week, in one message</span></div></div><div class="gi"><div class="ic">⭐</div><div><b>Smart priorities</b><span>Too much on your plate? Jiji picks what's first, and tells you why</span></div></div></div>
+    </div>
     <h3 style="font-size:20px;margin:26px 0 4px">Coming to the satchel next</h3>
-    <div class="roadmap"><span>☀️ Morning briefing</span><span>📧 Gmail</span><span>📅 Exam form &amp; scholarship deadlines</span><span>💼 Placements</span><span>🏫 More colleges</span></div>
+    <div class="roadmap"><span>📧 Gmail</span><span>📅 Exam form &amp; scholarship deadlines</span><span>💼 Placements</span><span>🏫 More colleges</span></div>
   </div>
 </section>
 
@@ -361,4 +392,4 @@ document.querySelectorAll('#chips button').forEach(btn=>btn.onclick=()=>{documen
 play('rem');
 </script>
 </body>
-</html>
+      </html>
